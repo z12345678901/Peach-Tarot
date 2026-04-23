@@ -352,8 +352,9 @@
             white-space: pre-wrap;
             border: 3px solid var(--border-soft);
             min-height: 200px;
-            max-height: 600px;
-            overflow-y: auto;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            width: 100%;
         }
 
         .typing::after {
@@ -509,12 +510,11 @@
         }
 
         .panel-content {
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            overflow: visible;
         }
 
         .panel-content.collapsed {
-            max-height: 0 !important;
+            display: none;
         }
 
         .svg-icon {
@@ -686,11 +686,11 @@
             </div>
                         <div class="announcement-item">
                 <span class="announcement-bullet">✦</span>
-                <span class="announcement-text">链接api即可使用，不清楚api是什么善用搜索哦</span>
+                <span class="announcement-text">禁止二传倒卖，作者小鼠，免费分享，仅发布于社区和小红书</span>
             </div>
                         <div class="announcement-item">
                 <span class="announcement-bullet">✦</span>
-                <span class="announcement-text">禁止二传倒卖，作者小鼠，免费分享，仅发布于社区和小红书</span>
+                <span class="announcement-text">和豆包ds等的区别在于塔罗和雷诺曼分别有两种模式的提示词，不容易生搬硬套牌意，不会因为结果不好而说善意的谎言，但是各有各的方便之处，ai是代替不了真人的</span>
             </div>
         </div>
         <button class="announcement-btn" onclick="closeAnnouncement()">我已知晓</button>
@@ -1045,13 +1045,6 @@
         header.classList.toggle('expanded');
         const content = header.nextElementSibling;
         content.classList.toggle('show');
-        
-        requestAnimationFrame(() => {
-            const panelContent = header.closest('.panel-content');
-            if (panelContent && !panelContent.classList.contains('collapsed')) {
-                panelContent.style.maxHeight = panelContent.scrollHeight + 'px';
-            }
-        });
     }
 
     function togglePanel(title) {
@@ -1061,11 +1054,6 @@
     }
 
     function initPanels() {
-        document.querySelectorAll('.panel-content').forEach(content => {
-            requestAnimationFrame(() => {
-                content.style.maxHeight = content.scrollHeight + 'px';
-            });
-        });
     }
 
     function switchMode(mode, btn) {
@@ -1157,13 +1145,6 @@
                 </div>
             `).join('');
         }
-        
-        requestAnimationFrame(() => {
-            const panelContent = container.closest('.panel-content');
-            if (panelContent && !panelContent.classList.contains('collapsed')) {
-                panelContent.style.maxHeight = panelContent.scrollHeight + 'px';
-            }
-        });
     }
 
     async function deliverFate() {
@@ -1311,6 +1292,7 @@ ${background ? `\n背景补充：${background}` : ''}
 【输出格式要求】
 - 不要输出你的思考过程、分析步骤或思维链
 - 直接输出最终的解读结果
+- 语言风格：用大白话，像朋友聊天一样直白，不要用"温柔""深刻""蕴含""指引"这类修饰词，直接说人话
 - 使用以下格式让排版美观：
   - 使用「」符号标注牌名
   - 使用 ═══ 或 ─── 作为分隔线
@@ -1318,7 +1300,7 @@ ${background ? `\n背景补充：${background}` : ''}
   - 每个部分之间空一行
   - 重要内容可使用【】标注
 
-请用温柔而专业的语言进行解读，排版清晰，层次分明，直接给出解读结果。`;
+请用大白话进行解读，不要用华丽的辞藻和修饰词汇，就像朋友之间聊天一样直白地说。排版清晰，层次分明，直接给出解读结果。`;
         } else {
             prompt = `你是一位精通雷诺曼牌解读的专业占卜师。请按照以下要求进行解读：
 
@@ -1334,7 +1316,9 @@ ${background ? `\n【背景补充】\n${background}` : ''}
 
 请结合指示牌的含义来解读整体牌阵（如有），并针对问题给出专业解读。
 
-请用温柔而专业的语言进行解读，排版清晰，层次分明。`;
+语言风格：用大白话，像朋友聊天一样直白，不要用"温柔""深刻""蕴含""指引"这类修饰词，直接说人话。
+
+请用大白话进行解读，不要用华丽的辞藻和修饰词汇，就像朋友之间聊天一样直白地说。排版清晰，层次分明。`;
         }
         return prompt;
     }
